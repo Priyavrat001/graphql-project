@@ -7,8 +7,11 @@ import express from 'express';
 import http from "http";
 import mergedResolvers from "./resolver/index.js";
 import mergedTypeDefs from "./typeDefs/index.js";
+import connectToMongo from "./db/database.js";
 
 dotenv.config({})
+
+connectToMongo();
 const app = express();
 const port = process.env.PORT || 4000;
 const httpServer = http.createServer(app);
@@ -25,10 +28,8 @@ app.use(
 	'/',
 	cors(),
 	express.json(),
-	// expressMiddleware accepts the same arguments:
-	// an Apollo Server instance and optional configuration options
 	expressMiddleware(server, {
-	  context: async ({ req }) => ({ token: req.headers.token }),
+	  context: async ({ req }) => ({ req }),
 	}),
   );
 
