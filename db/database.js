@@ -9,4 +9,4 @@ const connectToMongo = ()=>{
     mongoose.connect(uri).then(c=> console.log(`MongoDB is connected ${c.connection.name}`)).catch(err=>console.error(err))
 }
 
-export default connectToMongo;
+export {connectToMongo};
