@@ -25,4 +25,4 @@ const schema = new mongoose.Schema({
     }
 },{timestamps:true});
 
-export const Transaction = mongoose.model("User", schema);
+export const User = mongoose.model("User", schema);

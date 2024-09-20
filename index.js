@@ -9,10 +9,12 @@ import session from "express-session";
 import http from "http";
 import passport from "passport";
 import { connectToMongo as connectToDB } from "./db/database.js";
+import { configurePassport } from "./passport/passport.js";
 import mergedResolvers from "./resolver/index.js";
 import mergedTypeDefs from "./typeDefs/index.js";
 
-dotenv.config({})
+dotenv.config({});
+configurePassport();
 
 connectToDB();
 const app = express();
@@ -53,10 +55,13 @@ await server.start();
 
 app.use(
 	'/',
-	cors(),
+	cors({
+		origin:"http://localhost:3000",
+		credentials:true
+	}),
 	express.json(),
 	expressMiddleware(server, {
-		context: async ({ req }) => ({ req }),
+		context: async ({ req, res }) => ({ req, res }),
 	}),
 );
 
