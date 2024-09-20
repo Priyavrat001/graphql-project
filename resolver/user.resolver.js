@@ -59,7 +59,7 @@ const userResolver = {
             }
         },
 
-        logout: async (_, _, context) => {
+        logout: async (_, args, context) => {
             try {
                 await context.logout();
 
@@ -76,10 +76,10 @@ const userResolver = {
                 throw new Error(err.message || "Internal server error");
 
             }
-        },
+        }
     },
     Query: {
-        authUser: async (_, _, context) => {
+        authUser: async (_, args, context) => {
             try {
                 const user = await context.getUser();
                 return user;
