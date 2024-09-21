@@ -36,7 +36,43 @@ const transactionResolver = {
         }
         // todo add category statics
     },
-    Mutation: {}
+    Mutation: {
+        createTransaction: async(_, {input}, context)=>{
+            try {
+                const newTransaction = new Transaction({
+                    ...input,
+                    userId: context.getUser()._id,
+                });
+
+                await newTransaction.save();
+                return newTransaction;
+            } catch (err) {
+                console.error("Something went wrong in createTransaction", err);
+                throw new Error(err.message || "Inernal server error")
+            }
+        },
+        updateTransaction: async(_, [input])=>{
+            try {
+                const updatedTransaction = await Transaction.findById(input.transactionId, {new:true});
+
+                return updatedTransaction;
+            } catch (err) {
+                console.error("Something went wrong in updateTransaction", err);
+                throw new Error(err.message || "Inernal server error")
+            }
+        },
+        deleteTransaction: async(_, {transactionId})=>{
+            try {
+                const deleteTransaction = await Transaction.findByIdAndDelete(transactionId);
+
+                return deleteTransaction;
+            } catch (err) {
+                console.error("Something went wrong in deleteTransaction", err);
+                throw new Error(err.message || "Inernal server error")
+            }
+        },
+    },
+    // todo add transaction and user relationship
 }
 
 export default transactionResolver;

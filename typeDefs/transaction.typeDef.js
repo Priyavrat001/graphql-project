@@ -18,7 +18,7 @@ type Query {
 
 type Mutation {
     createTransaction(input: CreateTransactionInput!):Transaction!
-    upadateTransaction(input: UpdateTransactionInput!):Transaction!
+    updateTransaction(input: UpdateTransactionInput!):Transaction!
     deleteTransaction(transactionId:ID!):Transaction!
 }
 
